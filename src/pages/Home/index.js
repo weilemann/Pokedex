@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 
 import './styles.css';
 import Red from '../../images/Red.png';
+import Lyra from '../../images/Lyra.png';
 
 const Home = () => {
   return (
     <div className='home-container'>
-      <div className='trainer-container'>
-        <img src={Red} alt='Trainer' />
+      <div className='male-trainer-container'>
+        <img src={Red} alt='Male Trainer' />
+      </div>
+      <div className='female-trainer-container'>
+        <img src={Lyra} alt='Female Trainer' />
       </div>
       <div className='text-container'>
         <h1>Welcome to Pokedex!</h1>

@@ -1,27 +1,12 @@
 .pokedex-container {
   height: 100%;
-  background: url('../../images/Pokedex-background.png') -312px -221.22px;
-}
-
-.back-container {
-  margin-left: 100px;
-  font-size: 20px;
-  width: 500px;
-  text-align: center;
+  display: block;
+  background: url('../../images/Pokedex-background.png');
 }
 
 .title-container {
+  width: 60%;
   text-align: center;
-}
-
-.pokedex-container h1 {
-  font-family: 'Ubuntu', sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 48px;
-  line-height: 55px;
-
-  color: #494646;
 }
 
 .cards-container {
@@ -30,4 +15,26 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 20px;
   padding-inline-start: 20px;
+}
+
+header {
+  margin-top: 30px;
+  display: flex;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+.back-container {
+  width: 20%;
+}
+
+.back-container h2 {
+  margin-left: 100px;
+  font-family: 'Ubuntu', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 55px;
+
+  color: #35b1f8;
 }

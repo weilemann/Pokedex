@@ -6,15 +6,21 @@
   background-blend-mode: color-burn;
 }
 
-.trainer-container {
+.male-trainer-container {
   position: absolute;
-  left: 143px;
+  left: 100px;
   top: 66px;
+}
+
+.female-trainer-container {
+  position: absolute;
+  left: 410px;
+  top: 120px;
 }
 
 .text-container {
   position: absolute;
-  left: 838px;
+  left: 900px;
   top: 104px;
   width: 419px;
 }
@@ -35,7 +41,7 @@
   position: absolute;
   width: 238px;
   height: 63px;
-  left: 838px;
+  left: 900px;
   top: 379px;
 }
 

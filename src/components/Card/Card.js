@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { getPokemonImageUrl, getPokemonUrl } from '../../services/api';
+import { getPokemonImageUrl } from '../../services/api';
 
 import './style.css';
 import axios from 'axios';
@@ -11,39 +11,43 @@ const Card = (pokemon) => {
     id: 0,
     weight: 0,
     height: 0,
+    imageUrl: '',
   });
   const { name, url } = pokemon.pokemon;
   const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
+  const capitalizedType = pokemonData.types.map(
+    (type) => type[0].toUpperCase() + type.slice(1)
+  );
 
   useEffect(() => {
     const getPokemonData = async () => {
-      axios.get(url).then((response) => {
-        console.log(response.data.height);
-
+      await axios.get(url).then((response) => {
         setPokemonData({
-          types: response.data.types,
+          types: response.data.types.map((typeInfo) => typeInfo.type.name),
           id: response.data.id,
           weight: response.data.weight,
           height: response.data.height,
+          imageUrl: getPokemonImageUrl(response.data.id),
         });
       });
     };
 
     getPokemonData();
-  }, []);
+  }, [url]);
 
   return (
-    <div className='card'>
-      <div className='image-container'>
-        <img src={getPokemonImageUrl(pokemonData.id)} alt={capitalizedName} />
+    <div className={`pokemon-card ${pokemonData.types[0]}`}>
+      <div>
+        <img
+          src={pokemonData.imageUrl}
+          alt={capitalizedName}
+          className='card-image'
+        />
       </div>
-      <div className='info-container'>
-        <p>
-          #{pokemonData.id} - {capitalizedName}
-        </p>
-        <p>Weight: {pokemonData.weight}kg </p>
-        <p>Height: {pokemonData.height}m</p>
-      </div>
+      <h2 className='card-title'>
+        #{pokemonData.id} - {capitalizedName}
+      </h2>
+      <p className='card-subtitle'>{capitalizedType.join(' / ')}</p>
     </div>
   );
 };
