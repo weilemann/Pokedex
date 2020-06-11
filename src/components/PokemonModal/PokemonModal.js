@@ -18,57 +18,54 @@ const PokemonModal = ({ show, handleClose, pokemon }) => {
 
   const [barChart, setBarChart] = useState({
     labels: [
-      '',
       'HP',
       'Attack',
       'Defense',
       'Special Attack',
       'Special Defense',
       'Speed',
-      '',
     ],
     datasets: [
       {
         label: '',
         backgroundColor: [
-          '#6eff630e',
           '#6eff636e',
           '#ff63636e',
           '#ffac636e',
           '#6366ff6e',
           '#fffa636e',
           '#f563ff6e',
-          '#f563ff6e',
         ],
         borderColor: [
-          '#6eff630e',
           '#6eff63',
           '#ff6363',
           '#ffac63',
           '#6366ff',
           '#fffa63',
-          '#f563ff',
           '#f563ff',
         ],
         borderWidth: 1,
         hoverBackgroundColor: [
           '#6eff63',
-          '#6eff63',
           '#ff6363',
           '#ffac63',
           '#6366ff',
           '#fffa63',
           '#f563ff',
-          '#f563ff',
         ],
-        data: [0, 50, 40, 70, 50, 60, 50, 0],
+        data: [0, 0, 0, 0, 0, 0],
       },
     ],
   });
+  const { datasets } = barChart;
 
   useEffect(() => {
-    if (pokemon.name != undefined) {
+    if (pokemon.name !== undefined) {
       setSelectedPokemon(pokemon);
+      setBarChart({
+        ...barChart,
+        datasets: [{ ...datasets[0], data: pokemon.baseStats }],
+      });
     }
   }, [pokemon]);
 
@@ -135,7 +132,24 @@ const PokemonModal = ({ show, handleClose, pokemon }) => {
         </Row>
         <Row>
           <Col xs={12} md={12}>
-            <HorizontalBar height={'100px'} data={barChart} />
+            <HorizontalBar
+              height={100}
+              data={barChart}
+              options={{
+                legend: {
+                  display: false,
+                },
+                scales: {
+                  xAxes: [
+                    {
+                      ticks: {
+                        beginAtZero: true,
+                      },
+                    },
+                  ],
+                },
+              }}
+            />
           </Col>
         </Row>
       </Container>

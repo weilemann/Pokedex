@@ -17,20 +17,41 @@ const Pokedex = () => {
 
   const loadPokemonData = async (pokemon) => {
     await axios.get(pokemon.url).then((response) => {
+      const {
+        name,
+        types,
+        id,
+        weight,
+        height,
+        sprites,
+        stats,
+        abilities,
+      } = response.data;
       setSelectedPokemonDetails({
-        name:
-          response.data.name.charAt(0).toUpperCase() +
-          response.data.name.slice(1),
-        types: response.data.types.map(
+        name: name.charAt(0).toUpperCase() + name.slice(1),
+        types: types.map(
           (typeInfo) =>
             typeInfo.type.name[0].toUpperCase() + typeInfo.type.name.slice(1)
         ),
-        id: response.data.id,
-        weight: response.data.weight,
-        height: response.data.height,
-        imageUrl: getPokemonImageUrl(response.data.id),
-        spriteImageUrl: response.data.sprites.front_default,
-        shinySpriteImageUrl: response.data.sprites.front_shiny,
+        abilities: abilities.map(
+          (abilitiesInfo) =>
+            abilitiesInfo.ability.name[0].toUpperCase() +
+            abilitiesInfo.ability.name.slice(1)
+        ),
+        id: id,
+        weight: weight / 10,
+        height: height / 10,
+        imageUrl: getPokemonImageUrl(id),
+        spriteImageUrl: sprites.front_default,
+        shinySpriteImageUrl: sprites.front_shiny,
+        baseStats: [
+          stats[0].base_stat,
+          stats[1].base_stat,
+          stats[2].base_stat,
+          stats[3].base_stat,
+          stats[4].base_stat,
+          stats[5].base_stat,
+        ],
       });
     });
   };
