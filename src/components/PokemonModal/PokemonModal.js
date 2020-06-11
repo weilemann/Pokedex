@@ -1,38 +1,75 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
-import { useEffect } from 'react';
-import axios from 'axios';
+import { HorizontalBar } from 'react-chartjs-2';
 
-import getPokemonImageUrl from '../../services/api';
+import './style.css';
 
 const PokemonModal = ({ show, handleClose, pokemon }) => {
-  const [pokemonData, setPokemonData] = useState({
-    types: [],
+  const [selectedPokemon, setSelectedPokemon] = useState({
+    name: '',
+    types: ['none', 'none'],
     id: 0,
     weight: 0,
     height: 0,
+    imageUrl: '',
+    spriteImageUrl: '',
+    shinySpriteImageUrl: '',
   });
-  const capitalizedName =
-    pokemon?.name.charAt(0).toUpperCase() + pokemon?.name.slice(1);
-  const capitalizedType = pokemonData.types.map(
-    (type) => type[0].toUpperCase() + type.slice(1)
-  );
+
+  const [barChart, setBarChart] = useState({
+    labels: [
+      '',
+      'HP',
+      'Attack',
+      'Defense',
+      'Special Attack',
+      'Special Defense',
+      'Speed',
+      '',
+    ],
+    datasets: [
+      {
+        label: '',
+        backgroundColor: [
+          '#6eff630e',
+          '#6eff636e',
+          '#ff63636e',
+          '#ffac636e',
+          '#6366ff6e',
+          '#fffa636e',
+          '#f563ff6e',
+          '#f563ff6e',
+        ],
+        borderColor: [
+          '#6eff630e',
+          '#6eff63',
+          '#ff6363',
+          '#ffac63',
+          '#6366ff',
+          '#fffa63',
+          '#f563ff',
+          '#f563ff',
+        ],
+        borderWidth: 1,
+        hoverBackgroundColor: [
+          '#6eff63',
+          '#6eff63',
+          '#ff6363',
+          '#ffac63',
+          '#6366ff',
+          '#fffa63',
+          '#f563ff',
+          '#f563ff',
+        ],
+        data: [0, 50, 40, 70, 50, 60, 50, 0],
+      },
+    ],
+  });
 
   useEffect(() => {
-    const getPokemonData = async () => {
-      if (pokemon != null) {
-        await axios.get(pokemon.url).then((response) => {
-          setPokemonData({
-            types: response.data.types.map((typeInfo) => typeInfo.type.name),
-            id: response.data.id,
-            weight: response.data.weight,
-            height: response.data.height,
-          });
-        });
-      }
-    };
-
-    getPokemonData();
+    if (pokemon.name != undefined) {
+      setSelectedPokemon(pokemon);
+    }
   }, [pokemon]);
 
   return (
@@ -46,16 +83,59 @@ const PokemonModal = ({ show, handleClose, pokemon }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>
-          <h1>{capitalizedName}</h1>
+          <h1>{selectedPokemon?.name}</h1>
         </Modal.Title>
       </Modal.Header>
       <Container>
-        <Row style={{ height: '600px' }}>
-          <Col xs={12} md={6} style={{ backgroundColor: 'lightgreen' }}>
-            <h1>Aqui era pra ter uma imagem</h1>
+        <Row>
+          <Col xs={4} md={4}>
+            <Col>
+              <div className='modal-type-container'>
+                <span className={`type ${selectedPokemon.types[0]} left`}>
+                  {selectedPokemon.types[0]}
+                </span>
+                <span className={`type ${selectedPokemon.types[1]} left`}>
+                  {selectedPokemon.types[1]}
+                </span>
+              </div>
+              <div className='modal-img-container'>
+                <label>
+                  <strong>Default Sprite</strong>
+                </label>
+                <img
+                  src={selectedPokemon.spriteImageUrl}
+                  alt={selectedPokemon.name}
+                />
+              </div>
+            </Col>
+            <Col>
+              <div className='modal-img-container'>
+                <label>
+                  <strong>Shiny Sprite</strong>
+                </label>
+                <img
+                  src={selectedPokemon.shinySpriteImageUrl}
+                  alt={selectedPokemon.name}
+                />
+              </div>
+            </Col>
           </Col>
-          <Col xs={6} md={6} style={{ backgroundColor: 'lightblue' }}>
-            <Row></Row>
+          <Col xs={8} md={8}>
+            <div className='modal-text-container'>
+              <p>
+                <strong>Weight: </strong>
+                {selectedPokemon.weight} kg
+              </p>
+              <p>
+                <strong>Height: </strong>
+                {selectedPokemon.height} m
+              </p>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={12}>
+            <HorizontalBar height={'100px'} data={barChart} />
           </Col>
         </Row>
       </Container>
