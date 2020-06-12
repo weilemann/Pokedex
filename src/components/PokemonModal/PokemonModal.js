@@ -14,6 +14,7 @@ const PokemonModal = ({ show, handleClose, pokemon }) => {
     imageUrl: '',
     spriteImageUrl: '',
     shinySpriteImageUrl: '',
+    abilities: ['none', 'none'],
   });
 
   const [barChart, setBarChart] = useState({
@@ -126,6 +127,10 @@ const PokemonModal = ({ show, handleClose, pokemon }) => {
               <p>
                 <strong>Height: </strong>
                 {selectedPokemon.height} m
+              </p>
+              <p>
+                <strong>Abilities: </strong>
+                {selectedPokemon.abilities.join(' / ')}
               </p>
             </div>
           </Col>

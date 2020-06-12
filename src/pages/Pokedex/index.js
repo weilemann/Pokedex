@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
+import api, { getPokemonImageUrl } from '../../services/api';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { getPokemonImageUrl } from '../../services/api';
+import { Pagination } from 'semantic-ui-react';
 
 import Card from '../../components/Card/Card';
 import PokemonModal from '../../components/PokemonModal/PokemonModal';
@@ -12,8 +12,30 @@ const Pokedex = () => {
   const [pokemons, setPokemons] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [selectedPokemonDetails, setSelectedPokemonDetails] = useState({});
+  const [pokedexPagination, setPokedexPagination] = useState({
+    currentPage: 0,
+    offset: 0,
+  });
 
-  const qty = 25;
+  let qty = 25;
+
+  useEffect(() => {
+    const getPokemons = async () => {
+      await api
+        .get(
+          `pokemon?limit=${qty}&offset=${pokedexPagination.currentPage * 25}`
+        )
+        .then((response) => {
+          setPokemons(response.data['results']);
+        });
+    };
+
+    if (pokedexPagination.currentPage == 32) {
+      qty = 7;
+    }
+
+    getPokemons();
+  }, [pokedexPagination.currentPage]);
 
   const loadPokemonData = async (pokemon) => {
     await axios.get(pokemon.url).then((response) => {
@@ -56,20 +78,18 @@ const Pokedex = () => {
     });
   };
 
-  useEffect(() => {
-    const getPokemons = async () => {
-      await api.get(`pokemon?limit=${qty}&offset=0`).then((response) => {
-        setPokemons(response.data['results']);
-      });
-    };
-
-    getPokemons();
-  }, []);
-
   const handlePokemonClick = (pokemon) => (e) => {
     e.preventDefault();
     setSelectedPokemon(pokemon);
     loadPokemonData(pokemon);
+  };
+
+  const onPaginationClick = (_, data) => {
+    if (data.activePage == 1) {
+      setPokedexPagination({ currentPage: 0 });
+    } else {
+      setPokedexPagination({ currentPage: data.activePage });
+    }
   };
 
   return (
@@ -92,6 +112,13 @@ const Pokedex = () => {
           <h1>Choose your pokemon</h1>
         </div>
       </header>
+      <div className='pagination-container'>
+        <Pagination
+          defaultActivePage={1}
+          totalPages={32}
+          onPageChange={onPaginationClick}
+        />
+      </div>
       <div className='cards-container'>
         {pokemons.map((pokemon) => (
           <a
@@ -103,12 +130,6 @@ const Pokedex = () => {
           </a>
         ))}
       </div>
-
-      <footer>
-        <br />
-        <br />
-        <p>Paginação</p>
-      </footer>
     </div>
   );
 };

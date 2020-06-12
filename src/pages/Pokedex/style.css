@@ -24,6 +24,11 @@ header {
   margin-bottom: 100px;
 }
 
+.pagination-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
 .back-container {
   width: 20%;
 }
