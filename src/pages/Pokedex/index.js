@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api, { getPokemonImageUrl } from '../../services/api';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+// import Pagination from '@material-ui/lab/Pagination';
 import { Pagination } from 'semantic-ui-react';
 
 import Card from '../../components/Card/Card';
@@ -18,6 +19,9 @@ const Pokedex = () => {
   });
 
   let qty = 25;
+  if (pokedexPagination.currentPage === 32) {
+    qty = 7;
+  }
 
   useEffect(() => {
     const getPokemons = async () => {
@@ -30,12 +34,8 @@ const Pokedex = () => {
         });
     };
 
-    if (pokedexPagination.currentPage == 32) {
-      qty = 7;
-    }
-
     getPokemons();
-  }, [pokedexPagination.currentPage]);
+  }, [pokedexPagination.currentPage, qty]);
 
   const loadPokemonData = async (pokemon) => {
     await axios.get(pokemon.url).then((response) => {
@@ -84,8 +84,17 @@ const Pokedex = () => {
     loadPokemonData(pokemon);
   };
 
+  // const onPaginationClick = (_) => {
+  //   if (_.target.innerText === 1) {
+  //     setPokedexPagination({ currentPage: 0 });
+  //   } else {
+  //     setPokedexPagination({ currentPage: _.target.innerText });
+  //   }
+  //   console.log(_);
+  // };
+
   const onPaginationClick = (_, data) => {
-    if (data.activePage == 1) {
+    if (data.activePage === 1) {
       setPokedexPagination({ currentPage: 0 });
     } else {
       setPokedexPagination({ currentPage: data.activePage });
@@ -113,6 +122,7 @@ const Pokedex = () => {
         </div>
       </header>
       <div className='pagination-container'>
+        {/* <Pagination count={32} shape='rounded' onClick={onPaginationClick} /> */}
         <Pagination
           defaultActivePage={1}
           totalPages={32}

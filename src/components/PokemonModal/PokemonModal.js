@@ -86,8 +86,34 @@ const PokemonModal = ({ show, handleClose, pokemon }) => {
       </Modal.Header>
       <Container>
         <Row>
-          <Col xs={4} md={4}>
-            <Col>
+          <Col xs={4} md={4} style={{ marginLeft: '30px', marginTop: '20px' }}>
+            <Row style={{ textAlign: 'center' }}>
+              <div className='modal-img-container'>
+                <label>
+                  <strong>Default Sprite</strong>
+                </label>
+                <Col xs={2} md={2}>
+                  <img
+                    src={selectedPokemon.spriteImageUrl}
+                    alt={selectedPokemon.name}
+                  />
+                </Col>
+              </div>
+              <div className='modal-img-container'>
+                <label>
+                  <strong>Shiny Sprite</strong>
+                </label>
+                <Col xs={2} md={2}>
+                  <img
+                    src={selectedPokemon.shinySpriteImageUrl}
+                    alt={selectedPokemon.name}
+                  />
+                </Col>
+              </div>
+            </Row>
+          </Col>
+          <Col xs={6} md={6}>
+            <Row>
               <div className='modal-type-container'>
                 <span className={`type ${selectedPokemon.types[0]} left`}>
                   {selectedPokemon.types[0]}
@@ -96,29 +122,7 @@ const PokemonModal = ({ show, handleClose, pokemon }) => {
                   {selectedPokemon.types[1]}
                 </span>
               </div>
-              <div className='modal-img-container'>
-                <label>
-                  <strong>Default Sprite</strong>
-                </label>
-                <img
-                  src={selectedPokemon.spriteImageUrl}
-                  alt={selectedPokemon.name}
-                />
-              </div>
-            </Col>
-            <Col>
-              <div className='modal-img-container'>
-                <label>
-                  <strong>Shiny Sprite</strong>
-                </label>
-                <img
-                  src={selectedPokemon.shinySpriteImageUrl}
-                  alt={selectedPokemon.name}
-                />
-              </div>
-            </Col>
-          </Col>
-          <Col xs={8} md={8}>
+            </Row>
             <div className='modal-text-container'>
               <p>
                 <strong>Weight: </strong>
@@ -136,9 +140,9 @@ const PokemonModal = ({ show, handleClose, pokemon }) => {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={12}>
+          <Col xs={12} md={12} style={{ marginTop: '20px' }}>
             <HorizontalBar
-              height={100}
+              height={70}
               data={barChart}
               options={{
                 legend: {
@@ -149,6 +153,8 @@ const PokemonModal = ({ show, handleClose, pokemon }) => {
                     {
                       ticks: {
                         beginAtZero: true,
+                        max: 255,
+                        maxTicksLimit: 15,
                       },
                     },
                   ],
