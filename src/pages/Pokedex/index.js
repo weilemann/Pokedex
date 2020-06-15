@@ -122,7 +122,6 @@ const Pokedex = () => {
         </div>
       </header>
       <div className='pagination-container'>
-        {/* <Pagination count={32} shape='rounded' onClick={onPaginationClick} /> */}
         <Pagination
           defaultActivePage={1}
           totalPages={32}
