@@ -10,7 +10,7 @@ A aplicação tem como objetivo disponibilizar informações sobre os mais difer
 <img src="./src/images/App.gif" /> 
 
 <h2><strong>:satellite: Tecnologias*</strong></h2>
-<h3>Versão Web (React + TypeScript)</h3>
+<h3>Versão Web (ReactJS)</h3>
 <li>Axios</li>
 <li>React ChartJS 2</li>
 <li>Chart JS</li>
