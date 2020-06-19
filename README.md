@@ -1,4 +1,4 @@
-<img src="Cover.png" /> 
+<img src="./src/images/Cover.png" /> 
 
 Pokedex é um projeto frontend que está sendo desenvolvido por mim utilizando utilizando ReactJS.
 
@@ -7,7 +7,7 @@ Pokedex é um projeto frontend que está sendo desenvolvido por mim utilizando u
 A aplicação tem como objetivo disponibilizar informações sobre os mais diferentes tipos de pokemons em um interface amigável e de faço manuseio.
 
 <h3>:computer:Aplicação</h3>
-<img src="App.gif" /> 
+<img src="./src/images/App.gif" /> 
 
 <h2><strong>:satellite: Tecnologias*</strong></h2>
 <h3>Versão Web (React + TypeScript)</h3>
